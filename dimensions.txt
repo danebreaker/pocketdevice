@@ -1,0 +1,25 @@
+clock module height = 1.5
+clock module width = 13/16
+clock module depth = 7/16
+
+screen height = 2 5/16
+screen width = 1 11/16
+screen depth = 3/16
+pcb height offset = 7/16
+
+screen pcb height = 3
+screen pcb width = 1 11/16
+screen pcb depth = 1/16
+
+battery height = 2 1/16
+battery width = 1 5/16
+battery depth = 3/16
+
+charger module height = 1 1.5/16
+charger module width = 11/16
+charger module depth = 2/16
+port hangs over edge 1/16
+
+pico height = 2.16535
+pico width = .826772
+pico depth = 3/16
