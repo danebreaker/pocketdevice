@@ -1,11 +1,9 @@
 from machine import SPI, Pin, I2C
 from ili9341 import Display, color565
-import glcdfont
 from time import sleep
 import network
 import urequests
 from xpt2046 import Touch
-import socket
 import asyncio
 
 # Pin Configurations
@@ -43,7 +41,7 @@ class monk_os():
         self.clock = clock
         
         self.secondary_display_state = False
-        self.prev_sec_display_toggle = 0;
+        self.prev_sec_display_toggle = 0
         self.prev_touch_coords = [0,0]
         
         self.apps = apps
