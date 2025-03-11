@@ -42,20 +42,20 @@ if __name__ == '__main__':
 #                   'eight.png', 'eight_sm.png', 'eight_tiny.png',
 #                   'nine.png', 'nine_sm.png', 'nine_tiny.png',
 #                   'wifi.png', 'dots.png']
-    file_names = [
-            'zero_tiny_dark.png', 'one_tiny_dark.png', 'two_tiny_dark.png', 'three_tiny_dark.png', 'four_tiny_dark.png',
-            'five_tiny_dark.png', 'six_tiny_dark.png', 'seven_tiny_dark.png', 'eight_tiny_dark.png', 'nine_tiny_dark.png',
-            'wifi.png', 'slash_dark.png', 'dots.png'
-        ]
-    for png_file_name in file_names:
-        in_path = png_file_name#args[1]
-        if not path.exists(in_path):
-            error('File Not Found: ' + in_path)
+#     file_names = [
+#             'zero_tiny_dark.png', 'one_tiny_dark.png', 'two_tiny_dark.png', 'three_tiny_dark.png', 'four_tiny_dark.png',
+#             'five_tiny_dark.png', 'six_tiny_dark.png', 'seven_tiny_dark.png', 'eight_tiny_dark.png', 'nine_tiny_dark.png',
+#             'wifi.png', 'slash_dark.png', 'dots.png'
+#         ]
+#     for png_file_name in file_names:
+    in_path = args[1]
+    if not path.exists(in_path):
+        error('File Not Found: ' + in_path)
 
-        filename, ext = path.splitext(in_path)
-        out_path = filename + '.raw'
-        img = Image.open(in_path).convert('RGB')
-        pixels = list(img.getdata())
-        with open(out_path, 'wb') as f:
-            write_bin(f, pixels)
-        print('Saved: ' + out_path)
+    filename, ext = path.splitext(in_path)
+    out_path = filename + '.raw'
+    img = Image.open(in_path).convert('RGB')
+    pixels = list(img.getdata())
+    with open(out_path, 'wb') as f:
+        write_bin(f, pixels)
+    print('Saved: ' + out_path)
