@@ -5,6 +5,7 @@ import network
 import urequests
 from xpt2046 import Touch
 import asyncio
+from xglcd_font import XglcdFont
 
 # Pin Configurations
 
@@ -31,6 +32,8 @@ I2C_SLAVE_ADDR = 0x68
 SECONDARY_SCREEN_TOGGLE = Pin(22, Pin.IN, pull=Pin.PULL_DOWN)
 SECONDARY_SCREEN_BACKLIGHT = Pin(26, Pin.OUT)
 
+arcadepix = XglcdFont('ArcadePix9x11.c', 9, 11)
+
 # Main class to hold all objects
 
 class monk_os():
@@ -42,55 +45,60 @@ class monk_os():
         
         self.secondary_display_state = False
         self.prev_sec_display_toggle = 0
-        self.prev_touch_coords = [0,0]
+        self.prev_touch_coords = [0]
         
         self.apps = apps
+        self.shown_apps = []
         self.open_app = None
+        self.apps_bar_index = 0
+        
+        self.update_apps_bar()
 
     async def update_screen(self):
         clock_data = self.clock.read_time()
-        self.main_display.update_screen(clock_data)
+        self.main_display.update_screen(clock_data)     
+
+    def update_apps_bar(self):
+        self.shown_apps = self.apps[self.apps_bar_index:self.apps_bar_index+3]
+
+        self.main_display.draw_image(self.shown_apps[0].icon, 189, 80, 46, 46)
+        self.main_display.draw_image(self.shown_apps[1].icon, 189, 146, 46, 46)
+        self.main_display.draw_image(self.shown_apps[2].icon, 189, 212, 46, 46)
 
     async def handle_touch(self):
         touch = self.main_display.touch.raw_touch()
         if touch is not None:
             x,y = touch
             print(x,y)
-            # top button click
-            if (x <= 1616 and x >= 1568 and y <= 511 and y >= 255 and (self.prev_touch_coords[0] > 1616 or self.prev_touch_coords[0] < 1568 and self.prev_touch_coords[1] > 511 or self.prev_touch_coords[1] < 255)):
-                print("top app")
-                self.open_app  = 0
             
-            # middle button click
-            elif (x <= 1536 and x >= 1016 and y <= 511 and y >= 255 and (self.prev_touch_coords[0] > 1536 or self.prev_touch_coords[0] < 1016 and self.prev_touch_coords[1] > 511 or self.prev_touch_coords[1] < 255)):
-                print("middle app")
-                self.open_app  = 1
+            if (y <= 511 and y >= 255 and (self.prev_touch_coords[1] > 511 or self.prev_touch_coords[1] < 255)):
+                if (x <= 1616 and x >= 1568 and (self.prev_touch_coords[0] > 1616 or self.prev_touch_coords[0] < 1568)):
+                    print("up arrow")
+                    if self.apps_bar_index != 0:
+                        self.apps_bar_index -= 1
+                        self.update_apps_bar()
+                     
+                elif (x <= 255 and x >= 127 and (self.prev_touch_coords[0] > 255 or self.prev_touch_coords[0] < 127)):
+                    print("down arrow")
+                    if self.apps_bar_index != len(self.apps) - 3:
+                        self.apps_bar_index += 1
+                        self.update_apps_bar()
                 
-            # bottom button click
-            elif (x <= 1008 and x >= 960 and y <= 511 and y >= 255 and (self.prev_touch_coords[0] > 1008 or self.prev_touch_coords[0] < 960 and self.prev_touch_coords[1] > 511 or self.prev_touch_coords[1] < 255)):
-                print("bottom app")
-                self.open_app  = 2
+                # top app click
+                elif (x <= 1536 and x >= 1120 and (self.prev_touch_coords[0] > 1536 or self.prev_touch_coords[0] < 1120)):
+                    print("app 1 clicked")
+#                     if (type(self.shown_apps[0]) == App:
+                    self.shown_apps[0].open_app()
+                
+                # middle app click
+                elif (x <= 1008 and x >= 832 and (self.prev_touch_coords[0] > 1008 or self.prev_touch_coords[0] < 832)):
+                    print("app 2 clicked")
+                    self.shown_apps[1].open_app()
             
-            # next app button click
-            elif (x <= 928 and x >= 800 and y <= 507 and y >= 255 and (self.prev_touch_coords[0] > 928 or self.prev_touch_coords[0] < 800 and self.prev_touch_coords[1] > 507 or self.prev_touch_coords[1] < 255)):
-                print("next app")
-              
-            # clear secondary screen click
-            elif (x <= 768 and x >= 480 and y <= 511 and y >= 255 and (self.prev_touch_coords[0] > 768 or self.prev_touch_coords[0] < 480 and self.prev_touch_coords[1] > 511 or self.prev_touch_coords[1] < 255)):
-                print("clear screen")
-                self.secondary_display.display.fill_rectangle(0, 0, 240, 320, color565( 218, 193, 144 ))
-                self.secondary_display_state = False
-                
-            # wifi button click
-            elif (x <= 255 and x >= 127 and y <= 511 and y >= 255 and (self.prev_touch_coords[0] > 255 or self.prev_touch_coords[0] < 127 and self.prev_touch_coords[1] > 511 or self.prev_touch_coords[1] < 255)):
-                print('wifi clicked')
-#                 self.close_dock()
-#                 if self.wifi.status():
-#                     await self.wifi.disconnect()
-#                 else:
-#                     await self.wifi.connect()
-#                     for app in self.apps:
-#                         app.request()
+                #bottom app click
+                elif (x <= 800 and x >= 496 and (self.prev_touch_coords[0] > 800 or self.prev_touch_coords[0] < 496)):
+                    print("app 3 clicked")
+                    self.shown_apps[2].open_app()
                     
             self.prev_touch_coords = [x, y]
         else:
@@ -411,6 +419,7 @@ class Secondary_Display():
         
         self.display = Display(self.spi_display, cs=SPI0_CSn_left, dc=SPI0_DC_left, rst=SPI0_RESET_left)
         self.display.clear(color565( 218, 193, 144 ))
+        self.draw_image('secondary_screen_layout.raw', 0, 0, 240, 320)
 
     def draw_image(self, image, x, y, width, height):
         self.display.draw_image(image, x, y, width, height)
@@ -556,26 +565,29 @@ class WiFi():
         self.wlan = None
         main_os.main_display.remove_wifi()
 
-class app():
-    def __init__(self, app_name, endpoint):
+class schedule_app():
+    def __init__(self, app_name, icon, endpoint=None):
         self.app_name = app_name
         self.endpoint = endpoint
+        self.icon = icon
         self.resp = None
         self.latest_resp_code = 0
         
     def open_app(self):
-        connected = main_os.wifi.status()
-        if connected:
-            main_os.secondary_display.display.clear(color565( 218, 193, 144 ))
-            main_os.secondary_display.display.draw_text8x8(70, 155, 'Loading...', color565(0, 0, 0), background=color565( 218, 193, 144 ))
-            self.request()
-            self.draw_info()
-        elif self.resp != None:
-            main_os.secondary_display.display.clear(color565( 218, 193, 144 ))
-            self.draw_info()
-        else:
-            main_os.secondary_display.display.clear(color565( 218, 193, 144 ))
-            main_os.secondary_display.display.draw_text8x8(65, 155, 'Not Connected', color565(0, 0, 0), background=color565( 218, 193, 144 ))
+        print(self.app_name)
+        main_os.secondary_display.display.draw_text(5, 0, self.app_name, arcadepix, color565(194, 194, 194), background=color565(52, 51, 50))
+#         connected = main_os.wifi.status()
+#         if connected:
+#             main_os.secondary_display.display.clear(color565( 218, 193, 144 ))
+#             main_os.secondary_display.display.draw_text8x8(70, 155, 'Loading...', color565(0, 0, 0), background=color565( 218, 193, 144 ))
+#             self.request()
+#             self.draw_info()
+#         elif self.resp != None:
+#             main_os.secondary_display.display.clear(color565( 218, 193, 144 ))
+#             self.draw_info()
+#         else:
+#             main_os.secondary_display.display.clear(color565( 218, 193, 144 ))
+#             main_os.secondary_display.display.draw_text8x8(65, 155, 'Not Connected', color565(0, 0, 0), background=color565( 218, 193, 144 ))
     
     def close_app(self):
         main_os.secondary_display.display.draw_image('secondary_screen_layout.raw', 0, 0, 240, 320)
@@ -627,6 +639,36 @@ class app():
         elif self.latest_resp_code == 404:
                 main_os.secondary_display.display.draw_text8x8(65, 155, 'No Games Found', color565(0, 0, 0), background=color565( 218, 193, 144 ))
     
+    
+class wifi_app():
+    def __init__(self, app_name, icon, wifi):
+        self.app_name = app_name
+        self.icon = icon
+        self.wifi = wifi
+        
+    def open_app(self):
+        if self.wifi.status():
+            await self.wifi.disconnect()
+        else:
+            await self.wifi.connect()
+    
+    def close_app(self):
+        main_os.secondary_display.display.draw_image('secondary_screen_layout.raw', 0, 0, 240, 320)
+        
+        
+class clear_sec_screen_app():
+    def __init__(self, app_name, icon,sec_display):
+        self.app_name = app_name
+        self.icon = icon
+        self.secondary_display = sec_display
+        
+    def open_app(self):
+        self.secondary_display.display.draw_image('secondary_screen_layout.raw', 0, 0, 240, 320)
+    
+    def close_app(self):
+        self.secondary_display.display.draw_image('secondary_screen_layout.raw', 0, 0, 240, 320)
+    
+        
 main_display = Main_Display()
 main_display.init_screen()
 main_display.init_touch()
@@ -639,13 +681,15 @@ clock.init_clock()
 
 wifi = WiFi()
 
-packers_app = app('Packers Schedule', 'https://rrrrlgrot7knkm7twzqzfi6cda0mepib.lambda-url.us-east-2.on.aws/')
-brewers_app = app('Brewers Schedule', 'https://qgk63yzapnm7q7i7jefehuopkm0xnwro.lambda-url.us-east-2.on.aws/')
-bucks_app = app('Bucks Schedule', 'https://6puu43kgcctatxxjax6dew5p7u0tjpaf.lambda-url.us-east-2.on.aws/')
-badgers_app = app('Badgers Schedule', 'https://rrrrlgrot7knkm7twzqzfi6cda0mepib.lambda-url.us-east-2.on.aws/')
+packers_app = schedule_app('Packers Schedule', 'packers_app_icon.raw', 'https://rrrrlgrot7knkm7twzqzfi6cda0mepib.lambda-url.us-east-2.on.aws/')
+brewers_app = schedule_app('Brewers Schedule', 'brewers_app_icon.raw', 'https://qgk63yzapnm7q7i7jefehuopkm0xnwro.lambda-url.us-east-2.on.aws/')
+bucks_app = schedule_app('Bucks Schedule',  'bucks_app_icon.raw', 'https://6puu43kgcctatxxjax6dew5p7u0tjpaf.lambda-url.us-east-2.on.aws/')
+badgers_app = schedule_app('Badgers Schedule', 'badgers_app_icon.raw', 'https://rrrrlgrot7knkm7twzqzfi6cda0mepib.lambda-url.us-east-2.on.aws/')
+wifi_app = wifi_app('WiFi', 'settings_app_icon.raw', wifi)
+clear_sec_screen_app = clear_sec_screen_app('Clear Screen', 'clear_app_icon.raw', secondary_display)
 
 global main_os
-main_os = monk_os(main_display, secondary_display, wifi, clock, [packers_app, brewers_app, bucks_app, badgers_app])
+main_os = monk_os(main_display, secondary_display, wifi, clock, [packers_app, brewers_app, bucks_app, badgers_app, wifi_app, clear_sec_screen_app])
 
 async def task_update_screen():
     while True:
