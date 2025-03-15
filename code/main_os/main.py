@@ -25,6 +25,8 @@ T_CS = Pin(13)
 T_CLK = Pin(14)
 T_DI = Pin(15)
 
+T2_CS = Pin(10)
+
 I2C_SDA = Pin(8)
 I2C_SCL = Pin(9)
 I2C_SLAVE_ADDR = 0x68
@@ -68,6 +70,7 @@ class monk_os():
 
     async def handle_touch(self):
         touch = self.main_display.touch.raw_touch()
+        touch2 = self.secondary_display.touch.raw_touch()
         if touch is not None:
             x,y = touch
 #             print(x,y)
@@ -456,6 +459,8 @@ class Main_Display():
 class Secondary_Display():
     def __init__(self):
         self.spi_display = None
+        self.spi_touch = None
+        self.touch = None
         self.display = None
         self.smirk_monk = None
         
@@ -464,6 +469,10 @@ class Secondary_Display():
         
         self.display = Display(self.spi_display, cs=SPI0_CSn_left, dc=SPI0_DC_left, rst=SPI0_RESET_left)
         self.draw_image('secondary_screen_layout.raw', 0, 0, 240, 320)
+        
+    def init_touch(self):
+        self.spi_touch = SPI(1, 20_000_000, mosi=T_DI, miso=T_DO, sck=T_CLK)
+        self.touch = Touch(self.spi_touch, cs=T2_CS, x_min=127, x_max=1888, y_min=255, y_max=1888)
 
     def draw_image(self, image, x, y, width, height):
         self.display.draw_image(image, x, y, width, height)
@@ -715,6 +724,7 @@ main_display.init_touch()
 
 secondary_display = Secondary_Display()
 secondary_display.init_screen()
+secondary_display.init_touch()
 
 clock = Clock()
 clock.init_clock()

@@ -1,0 +1,7 @@
+Removed Member From Class: ClassName=Main_Display Member=J?
+Removed Member From Class: ClassName=Main_Display Member=P?
+Change Component Designator: OldDesignator=J? NewDesignator=J1
+Change Component Designator: OldDesignator=P? NewDesignator=P1
+Change Component Designator: OldDesignator=U? NewDesignator=PICO
+Added Member To Class: ClassName=Main_Display Member=Component J1 52271-2079
+Added Member To Class: ClassName=Main_Display Member=Component P1 61302211121

@@ -1,1 +1,2 @@
 Record=TopLevelDocument|FileName=Main_Display.SchDoc|SheetNumber=1
+Record=NoMainPathDocument|SourceDocument=Main_Display.SchDoc|FileName=Secondary_Display.SchDoc|SheetNumber=2
