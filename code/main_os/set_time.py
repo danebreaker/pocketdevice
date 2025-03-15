@@ -20,16 +20,16 @@ stop_clock(i2c)
 i2c.writeto(I2C_SLAVE_ADDR, bytearray([0x00, 0x01]))
 
 #set minutes
-i2c.writeto(I2C_SLAVE_ADDR, bytearray([0x01, 0x11]))
+i2c.writeto(I2C_SLAVE_ADDR, bytearray([0x01, 0x38]))
 
 #set hours
-i2c.writeto(I2C_SLAVE_ADDR, bytearray([0x02, 0x68]))
+i2c.writeto(I2C_SLAVE_ADDR, bytearray([0x02, 0x67]))
 
 #set day of week
-i2c.writeto(I2C_SLAVE_ADDR, bytearray([0x03, 0x02]))
+i2c.writeto(I2C_SLAVE_ADDR, bytearray([0x03, 0x05]))
 
 #set day of month
-i2c.writeto(I2C_SLAVE_ADDR, bytearray([0x04, 0x04]))
+i2c.writeto(I2C_SLAVE_ADDR, bytearray([0x04, 0x14]))
 
 #set month
 i2c.writeto(I2C_SLAVE_ADDR, bytearray([0x05, 0x03]))

@@ -32,6 +32,7 @@ I2C_SLAVE_ADDR = 0x68
 SECONDARY_SCREEN_TOGGLE = Pin(22, Pin.IN, pull=Pin.PULL_DOWN)
 SECONDARY_SCREEN_BACKLIGHT = Pin(26, Pin.OUT)
 
+UbuntuMono = XglcdFont('Unispace12x24.c', 12, 24)
 arcadepix = XglcdFont('ArcadePix9x11.c', 9, 11)
 
 # Main class to hold all objects
@@ -69,7 +70,7 @@ class monk_os():
         touch = self.main_display.touch.raw_touch()
         if touch is not None:
             x,y = touch
-            print(x,y)
+#             print(x,y)
             
             if (y <= 511 and y >= 255 and (self.prev_touch_coords[1] > 511 or self.prev_touch_coords[1] < 255)):
                 if (x <= 1616 and x >= 1568 and (self.prev_touch_coords[0] > 1616 or self.prev_touch_coords[0] < 1568)):
@@ -87,18 +88,41 @@ class monk_os():
                 # top app click
                 elif (x <= 1536 and x >= 1120 and (self.prev_touch_coords[0] > 1536 or self.prev_touch_coords[0] < 1120)):
                     print("app 1 clicked")
-#                     if (type(self.shown_apps[0]) == App:
-                    self.shown_apps[0].open_app()
+                    if self.open_app:
+                        self.open_app.close_app()
+                        
+                    app_type = str(type(self.shown_apps[0]))[8:12]
+                    if (app_type == 'wifi'):
+                        await self.shown_apps[0].open_app()
+                    else:
+                        self.shown_apps[0].open_app()
+                    self.open_app = self.shown_apps[0]
                 
                 # middle app click
                 elif (x <= 1008 and x >= 832 and (self.prev_touch_coords[0] > 1008 or self.prev_touch_coords[0] < 832)):
                     print("app 2 clicked")
-                    self.shown_apps[1].open_app()
+                    if self.open_app:
+                        self.open_app.close_app()
+                        
+                    app_type = str(type(self.shown_apps[1]))[8:12]
+                    if (app_type == 'wifi'):
+                        await self.shown_apps[1].open_app()
+                    else:
+                        self.shown_apps[1].open_app()
+                    self.open_app = self.shown_apps[1]
             
                 #bottom app click
                 elif (x <= 800 and x >= 496 and (self.prev_touch_coords[0] > 800 or self.prev_touch_coords[0] < 496)):
                     print("app 3 clicked")
-                    self.shown_apps[2].open_app()
+                    if self.open_app:
+                        self.open_app.close_app()
+                     
+                    app_type = str(type(self.shown_apps[2]))[8:12]
+                    if (app_type == 'wifi'):
+                        await self.shown_apps[2].open_app()
+                    else:
+                        self.shown_apps[2].open_app()
+                    self.open_app = self.shown_apps[2]
                     
             self.prev_touch_coords = [x, y]
         else:
@@ -137,276 +161,297 @@ class Main_Display():
     def update_screen(self, clock_data):
         seconds, ten_seconds, minutes, ten_minutes, hours, ten_hours, AM_PM, day_of_week, day_of_month, ten_day_of_month, month, ten_month, year, ten_year = clock_data
         
+        if (day_of_week == '0x1'):
+            self.display.draw_text(55, 75, 'Monday', arcadepix, color565(194, 194, 194), background=color565(52, 51, 50))
+        elif (day_of_week == '0x2'):
+            self.display.draw_text(55, 75, 'Tuesday', arcadepix, color565(194, 194, 194), background=color565(52, 51, 50))
+        elif (day_of_week == '0x3'):
+            self.display.draw_text(55, 75, 'Wednesday', arcadepix, color565(194, 194, 194), background=color565(52, 51, 50))
+        elif (day_of_week == '0x4'):
+            self.display.draw_text(55, 75, 'Thursday', arcadepix, color565(194, 194, 194), background=color565(52, 51, 50))
+        elif (day_of_week == '0x5'):
+            self.display.draw_text(55, 75, 'Friday', arcadepix, color565(194, 194, 194), background=color565(52, 51, 50))
+        elif (day_of_week == '0x6'):
+            self.display.draw_text(55, 75, 'Saturday', arcadepix, color565(194, 194, 194), background=color565(52, 51, 50))
+        elif (day_of_week == '0x7'):
+            self.display.draw_text(55, 75, 'Sunday', arcadepix, color565(194, 194, 194), background=color565(52, 51, 50))
+        
+        
+        if (AM_PM == '0x20'):
+            self.display.draw_text(110, 225, 'PM', UbuntuMono, color565(194, 194, 194), background=color565(52, 51, 50))
+        else:
+            self.display.draw_text(110, 225, 'AM', UbuntuMono, color565(194, 194, 194), background=color565(52, 51, 50))
+        
         if (seconds == '0x0'):
-            self.draw_image('zero_sm.raw', 121, 135, 20, 29)
+            self.draw_image('zero_sm.raw', 65, 230, 10, 14)
         elif (seconds == '0x1'):    
-            self.draw_image('one_sm.raw', 121, 135, 20, 29)
+            self.draw_image('one_sm.raw', 65, 230, 10, 14)
         elif (seconds == '0x2'):    
-            self.draw_image('two_sm.raw', 121, 135, 20, 29)
+            self.draw_image('two_sm.raw', 65, 230, 10, 14)
         elif (seconds == '0x3'):    
-            self.draw_image('three_sm.raw', 121, 135, 20, 29)
+            self.draw_image('three_sm.raw', 65, 230, 10, 14)
         elif (seconds == '0x4'):    
-            self.draw_image('four_sm.raw', 121, 135, 20, 29)
+            self.draw_image('four_sm.raw', 65, 230, 10, 14)
         elif (seconds == '0x5'):    
-            self.draw_image('five_sm.raw', 121, 135, 20, 29)
+            self.draw_image('five_sm.raw', 65, 230, 10, 14)
         elif (seconds == '0x6'):    
-            self.draw_image('six_sm.raw', 121, 135, 20, 29)
+            self.draw_image('six_sm.raw', 65, 230, 10, 14)
         elif (seconds == '0x7'):    
-            self.draw_image('seven_sm.raw', 121, 135, 20, 29)
+            self.draw_image('seven_sm.raw', 65, 230, 10, 14)
         elif (seconds == '0x8'):    
-            self.draw_image('eight_sm.raw', 121, 135, 20, 29)
+            self.draw_image('eight_sm.raw', 65, 230, 10, 14)
         elif (seconds == '0x9'):    
-            self.draw_image('nine_sm.raw', 121, 135, 20, 29)
+            self.draw_image('nine_sm.raw', 65, 230, 10, 14)
             
         if (ten_seconds == '0x0'):
-            self.draw_image('zero_sm.raw', 100, 135, 20, 29)
+            self.draw_image('zero_sm.raw', 53, 230, 10, 14)
         elif (ten_seconds == '0x10'):    
-            self.draw_image('one_sm.raw', 100, 135, 20, 29)
+            self.draw_image('one_sm.raw', 53, 230, 10, 14)
         elif (ten_seconds == '0x20'):    
-            self.draw_image('two_sm.raw', 100, 135, 20, 29)
+            self.draw_image('two_sm.raw', 53, 230, 10, 14)
         elif (ten_seconds == '0x30'):    
-            self.draw_image('three_sm.raw', 100, 135, 20, 29)
+            self.draw_image('three_sm.raw', 53, 230, 10, 14)
         elif (ten_seconds == '0x40'):    
-            self.draw_image('four_sm.raw', 100, 135, 20, 29)
+            self.draw_image('four_sm.raw', 53, 230, 10, 14)
         elif (ten_seconds == '0x50'):    
-            self.draw_image('five_sm.raw', 100, 135, 20, 29)
+            self.draw_image('five_sm.raw', 53, 230, 10, 14)
         elif (ten_seconds == '0x60'):    
-            self.draw_image('six_sm.raw', 100, 135, 20, 29)
+            self.draw_image('six_sm.raw', 53, 230, 10, 14)
         elif (ten_seconds == '0x70'):    
-            self.draw_image('seven_sm.raw', 100, 135, 20, 29)
+            self.draw_image('seven_sm.raw', 53, 230, 10, 14)
         elif (ten_seconds == '0x80'):    
-            self.draw_image('eight_sm.raw', 100, 135, 20, 29)
+            self.draw_image('eight_sm.raw', 53, 230, 10, 14)
         elif (ten_seconds == '0x90'):    
-            self.draw_image('nine_sm.raw', 100, 135, 20, 29)
+            self.draw_image('nine_sm.raw', 53, 230, 10, 14)
                 
         if (minutes == '0x0'):
-            self.draw_image('zero.raw', 188, 115, 45, 65)
+            self.draw_image('zero.raw', 95, 160, 45, 65)
         elif (minutes == '0x1'):    
-            self.draw_image('one.raw', 188, 115, 45, 65)
+            self.draw_image('one.raw', 95, 160, 45, 65)
         elif (minutes == '0x2'):    
-            self.draw_image('two.raw', 188, 115, 45, 65)
+            self.draw_image('two.raw', 95, 160, 45, 65)
         elif (minutes == '0x3'):    
-            self.draw_image('three.raw', 188, 115, 45, 65)
+            self.draw_image('three.raw', 95, 160, 45, 65)
         elif (minutes == '0x4'):    
-            self.draw_image('four.raw', 188, 115, 45, 65)
+            self.draw_image('four.raw', 95, 160, 45, 65)
         elif (minutes == '0x5'):    
-            self.draw_image('five.raw', 188, 115, 45, 65)
+            self.draw_image('five.raw', 95, 160, 45, 65)
         elif (minutes == '0x6'):    
-            self.draw_image('six.raw', 188, 115, 45, 65)
+            self.draw_image('six.raw', 95, 160, 45, 65)
         elif (minutes == '0x7'):    
-            self.draw_image('seven.raw', 188, 115, 45, 65)
+            self.draw_image('seven.raw', 95, 160, 45, 65)
         elif (minutes == '0x8'):    
-            self.draw_image('eight.raw', 188, 115, 45, 65)
+            self.draw_image('eight.raw', 95, 160, 45, 65)
         elif (minutes == '0x9'):    
-            self.draw_image('nine.raw', 188, 115, 45, 65)
+            self.draw_image('nine.raw', 95, 160, 45, 65)
             
         if (ten_minutes == '0x0'):
-            self.draw_image('zero.raw', 142, 115, 45, 65)
+            self.draw_image('zero.raw', 45, 160, 45, 65)
         elif (ten_minutes == '0x10'):    
-            self.draw_image('one.raw', 142, 115, 45, 65)
+            self.draw_image('one.raw', 45, 160, 45, 65)
         elif (ten_minutes == '0x20'):    
-            self.draw_image('two.raw', 142, 115, 45, 65)
+            self.draw_image('two.raw', 45, 160, 45, 65)
         elif (ten_minutes == '0x30'):    
-            self.draw_image('three.raw', 142, 115, 45, 65)
+            self.draw_image('three.raw', 45, 160, 45, 65)
         elif (ten_minutes == '0x40'):    
-            self.draw_image('four.raw', 142, 115, 45, 65)
+            self.draw_image('four.raw', 45, 160, 45, 65)
         elif (ten_minutes == '0x50'):    
-            self.draw_image('five.raw', 142, 115, 45, 65)
+            self.draw_image('five.raw', 45, 160, 45, 65)
         elif (ten_minutes == '0x60'):    
-            self.draw_image('six.raw', 142, 115, 45, 65)
+            self.draw_image('six.raw', 45, 160, 45, 65)
         elif (ten_minutes == '0x70'):    
-            self.draw_image('seven.raw', 142, 115, 45, 65)
+            self.draw_image('seven.raw', 45, 160, 45, 65)
         elif (ten_minutes == '0x80'):    
-            self.draw_image('eight.raw', 142, 115, 45, 65)
+            self.draw_image('eight.raw', 45, 160, 45, 65)
         elif (ten_minutes == '0x90'):    
-            self.draw_image('nine.raw', 142, 115, 45, 65)
+            self.draw_image('nine.raw', 45, 160, 45, 65)
                 
         if (hours == '0x0'):
-            self.draw_image('zero.raw', 54, 115, 45, 65)
+            self.draw_image('zero.raw', 95, 90, 45, 65)
         elif (hours == '0x1'):    
-            self.draw_image('one.raw', 54, 115, 45, 65)
+            self.draw_image('one.raw', 95, 90, 45, 65)
         elif (hours == '0x2'):    
-            self.draw_image('two.raw', 54, 115, 45, 65)
+            self.draw_image('two.raw', 95, 90, 45, 65)
         elif (hours == '0x3'):    
-            self.draw_image('three.raw', 54, 115, 45, 65)
+            self.draw_image('three.raw', 95, 90, 45, 65)
         elif (hours == '0x4'):    
-            self.draw_image('four.raw', 54, 115, 45, 65)
+            self.draw_image('four.raw', 95, 90, 45, 65)
         elif (hours == '0x5'):    
-            self.draw_image('five.raw', 54, 115, 45, 65)
+            self.draw_image('five.raw', 95, 90, 45, 65)
         elif (hours == '0x6'):    
-            self.draw_image('six.raw', 54, 115, 45, 65)
+            self.draw_image('six.raw', 95, 90, 45, 65)
         elif (hours == '0x7'):    
-            self.draw_image('seven.raw', 54, 115, 45, 65)
+            self.draw_image('seven.raw', 95, 90, 45, 65)
         elif (hours == '0x8'):    
-            self.draw_image('eight.raw', 54, 115, 45, 65)
+            self.draw_image('eight.raw', 95, 90, 45, 65)
         elif (hours == '0x9'):    
-            self.draw_image('nine.raw', 54, 115, 45, 65)
+            self.draw_image('nine.raw', 95, 90, 45, 65)
                 
         if (ten_hours == '0x0'):
-            self.draw_image('zero.raw', 8, 115, 45, 65)
+            self.draw_image('zero.raw', 45, 90, 45, 65)
         elif (ten_hours == '0x10'):    
-            self.draw_image('one.raw', 8, 115, 45, 65)
+            self.draw_image('one.raw', 45, 90, 45, 65)
         elif (ten_hours == '0x20'):    
-            self.draw_image('two.raw', 8, 115, 45, 65)
+            self.draw_image('two.raw', 45, 90, 45, 65)
         elif (ten_hours == '0x30'):    
-            self.draw_image('three.raw', 8, 115, 45, 65)
+            self.draw_image('three.raw', 45, 90, 45, 65)
         elif (ten_hours == '0x40'):    
-            self.draw_image('four.raw', 8, 115, 45, 65)
+            self.draw_image('four.raw', 45, 90, 45, 65)
         elif (ten_hours == '0x50'):    
-            self.draw_image('five.raw', 8, 115, 45, 65)
+            self.draw_image('five.raw', 45, 90, 45, 65)
         elif (ten_hours == '0x60'):    
-            self.draw_image('six.raw', 8, 115, 45, 65)
+            self.draw_image('six.raw', 45, 90, 45, 65)
         elif (ten_hours == '0x70'):    
-            self.draw_image('seven.raw', 8, 115, 45, 65)
+            self.draw_image('seven.raw', 45, 90, 45, 65)
         elif (ten_hours == '0x80'):    
-            self.draw_image('eight.raw', 8, 115, 45, 65)
+            self.draw_image('eight.raw', 45, 90, 45, 65)
         elif (ten_hours == '0x90'):    
-            self.draw_image('nine.raw', 8, 115, 45, 65)
+            self.draw_image('nine.raw', 45, 90, 45, 65)
             
         if (day_of_month == '0x0'):
-            self.draw_image('zero_tiny.raw', 121, 5, 10, 14)
+            self.draw_image('zero_sm_dark.raw', 200, 1, 10, 14)
         elif (day_of_month == '0x1'):    
-            self.draw_image('one_tiny.raw', 121, 5, 10, 14)
+            self.draw_image('one_sm_dark.raw', 200, 1, 10, 14)
         elif (day_of_month == '0x2'):    
-            self.draw_image('two_tiny.raw', 121, 5, 10, 14)
+            self.draw_image('two_sm_dark.raw', 200, 1, 10, 14)
         elif (day_of_month == '0x3'):    
-            self.draw_image('three_tiny.raw', 121, 5, 10, 14)
+            self.draw_image('three_sm_dark.raw', 200, 1, 10, 14)
         elif (day_of_month == '0x4'):    
-            self.draw_image('four_tiny.raw', 121, 5, 10, 14)
+            self.draw_image('four_sm_dark.raw', 200, 1, 10, 14)
         elif (day_of_month == '0x5'):    
-            self.draw_image('five_tiny.raw', 121, 5, 10, 14)
+            self.draw_image('five_sm_dark.raw', 200, 1, 10, 14)
         elif (day_of_month == '0x6'):    
-            self.draw_image('six_tiny.raw', 121, 5, 10, 14)
+            self.draw_image('six_sm_dark.raw', 200, 1, 10, 14)
         elif (day_of_month == '0x7'):    
-            self.draw_image('seven_tiny.raw', 121, 5, 10, 14)
+            self.draw_image('seven_sm_dark.raw', 200, 1, 10, 14)
         elif (day_of_month == '0x8'):    
-            self.draw_image('eight_tiny.raw', 121, 5, 10, 14)
+            self.draw_image('eight_sm_dark.raw', 200, 1, 10, 14)
         elif (day_of_month == '0x9'):    
-            self.draw_image('nine_tiny.raw', 121, 5, 10, 14)
+            self.draw_image('nine_sm_dark.raw', 200, 1, 10, 14)
             
         if (ten_day_of_month == '0x0'):
-            self.draw_image('zero_tiny.raw', 111, 5, 10, 14)
+            self.draw_image('zero_sm_dark.raw', 190, 1, 10, 14)
         elif (ten_day_of_month == '0x10'):    
-            self.draw_image('one_tiny.raw', 111, 5, 10, 14)
+            self.draw_image('one_sm_dark.raw', 190, 1, 10, 14)
         elif (ten_day_of_month == '0x20'):    
-            self.draw_image('two_tiny.raw', 111, 5, 10, 14)
+            self.draw_image('two_sm_dark.raw', 190, 1, 10, 14)
         elif (ten_day_of_month == '0x30'):    
-            self.draw_image('three_tiny.raw', 111, 5, 10, 14)
+            self.draw_image('three_sm_dark.raw', 190, 1, 10, 14)
         elif (ten_day_of_month == '0x40'):    
-            self.draw_image('four_tiny.raw', 111, 5, 10, 14)
+            self.draw_image('four_sm_dark.raw', 190, 1, 10, 14)
         elif (ten_day_of_month == '0x50'):    
-            self.draw_image('five_tiny.raw', 111, 5, 10, 14)
+            self.draw_image('five_sm_dark.raw', 190, 1, 10, 14)
         elif (ten_day_of_month == '0x60'):    
-            self.draw_image('six_tiny.raw', 111, 5, 10, 14)
+            self.draw_image('six_sm_dark.raw', 190, 1, 10, 14)
         elif (ten_day_of_month == '0x70'):    
-            self.draw_image('seven_tiny.raw', 111, 5, 10, 14)
+            self.draw_image('seven_sm_dark.raw', 190, 1, 10, 14)
         elif (ten_day_of_month == '0x80'):    
-            self.draw_image('eight_tiny.raw', 111, 5, 10, 14)
+            self.draw_image('eight_sm_dark.raw', 190, 1, 10, 14)
         elif (ten_day_of_month == '0x90'):    
-            self.draw_image('nine_tiny.raw', 111, 5, 10, 14)
+            self.draw_image('nine_sm_dark.raw', 190, 1, 10, 14)
             
-        self.draw_image('slash.raw', 101, 5, 10, 14)
+        self.draw_image('slash.raw', 180, 1, 10, 14)
         
         if (month == '0x0'):
-            self.draw_image('zero_tiny.raw', 90, 5, 10, 14)
+            self.draw_image('zero_sm_dark.raw', 170, 1, 10, 14)
         elif (month == '0x1'):    
-            self.draw_image('one_tiny.raw', 90, 5, 10, 14)
+            self.draw_image('one_sm_dark.raw', 170, 1, 10, 14)
         elif (month == '0x2'):    
-            self.draw_image('two_tiny.raw', 90, 5, 10, 14)
+            self.draw_image('two_sm_dark.raw', 170, 1, 10, 14)
         elif (month == '0x3'):    
-            self.draw_image('three_tiny.raw', 90, 5, 10, 14)
+            self.draw_image('three_sm_dark.raw', 170, 1, 10, 14)
         elif (month == '0x4'):    
-            self.draw_image('four_tiny.raw', 90, 5, 10, 14)
+            self.draw_image('four_sm_dark.raw', 170, 1, 10, 14)
         elif (month == '0x5'):    
-            self.draw_image('five_tiny.raw', 90, 5, 10, 14)
+            self.draw_image('five_sm_dark.raw', 170, 1, 10, 14)
         elif (month == '0x6'):    
-            self.draw_image('six_tiny.raw', 90, 5, 10, 14)
+            self.draw_image('six_sm_dark.raw', 170, 1, 10, 14)
         elif (month == '0x7'):    
-            self.draw_image('seven_tiny.raw', 90, 5, 10, 14)
+            self.draw_image('seven_sm_dark.raw', 170, 1, 10, 14)
         elif (month == '0x8'):    
-            self.draw_image('eight_tiny.raw', 90, 5, 10, 14)
+            self.draw_image('eight_sm_dark.raw', 170, 1, 10, 14)
         elif (month == '0x9'):    
-            self.draw_image('nine_tiny.raw', 90, 5, 10, 14)
+            self.draw_image('nine_sm_dark.raw', 170, 1, 10, 14)
             
         if (ten_month == '0x0'):
-            self.draw_image('zero_tiny.raw', 80, 5, 10, 14)
+            self.draw_image('zero_sm_dark.raw', 160, 1, 10, 14)
         elif (ten_month == '0x10'):    
-            self.draw_image('one_tiny.raw', 80, 5, 10, 14)
+            self.draw_image('one_sm_dark.raw', 160, 1, 10, 14)
         elif (ten_month == '0x20'):    
-            self.draw_image('two_tiny.raw', 80, 5, 10, 14)
+            self.draw_image('two_sm_dark.raw', 160, 1, 10, 14)
         elif (ten_month == '0x30'):    
-            self.draw_image('three_tiny.raw', 80, 5, 10, 14)
+            self.draw_image('three_sm_dark.raw', 160, 1, 10, 14)
         elif (ten_month == '0x40'):    
-            self.draw_image('four_tiny.raw', 80, 5, 10, 14)
+            self.draw_image('four_sm_dark.raw', 160, 1, 10, 14)
         elif (ten_month == '0x50'):    
-            self.draw_image('five_tiny.raw', 80, 5, 10, 14)
+            self.draw_image('five_sm_dark.raw', 160, 1, 10, 14)
         elif (ten_month == '0x60'):    
-            self.draw_image('six_tiny.raw', 80, 5, 10, 14)
+            self.draw_image('six_sm_dark.raw', 160, 1, 10, 14)
         elif (ten_month == '0x70'):    
-            self.draw_image('seven_tiny.raw', 80, 5, 10, 14)
+            self.draw_image('seven_sm_dark.raw', 160, 1, 10, 14)
         elif (ten_month == '0x80'):    
-            self.draw_image('eight_tiny.raw', 80, 5, 10, 14)
+            self.draw_image('eight_sm_dark.raw', 160, 1, 10, 14)
         elif (ten_month == '0x90'):    
-            self.draw_image('nine_tiny.raw', 80, 5, 10, 14)
+            self.draw_image('nine_sm_dark.raw', 160, 1, 10, 14)
             
-        self.draw_image('slash.raw', 132, 5, 10, 14)
+        self.draw_image('slash.raw', 210, 1, 10, 14)
         
         if (year == '0x0'):
-            self.draw_image('zero_tiny.raw', 152, 5, 10, 14)
+            self.draw_image('zero_sm_dark.raw', 230, 1, 10, 14)
         elif (year == '0x1'):    
-            self.draw_image('one_tiny.raw', 152, 5, 10, 14)
+            self.draw_image('one_sm_dark.raw', 230, 1, 10, 14)
         elif (year == '0x2'):    
-            self.draw_image('two_tiny.raw', 152, 5, 10, 14)
+            self.draw_image('two_sm_dark.raw', 230, 1, 10, 14)
         elif (year == '0x3'):    
-            self.draw_image('three_tiny.raw', 152, 5, 10, 14)
+            self.draw_image('three_sm_dark.raw', 230, 1, 10, 14)
         elif (year == '0x4'):    
-            self.draw_image('four_tiny.raw', 152, 5, 10, 14)
+            self.draw_image('four_sm_dark.raw', 230, 1, 10, 14)
         elif (year == '0x5'):    
-            self.draw_image('five_tiny.raw', 152, 5, 10, 14)
+            self.draw_image('five_sm_dark.raw', 230, 1, 10, 14)
         elif (year == '0x6'):    
-            self.draw_image('six_tiny.raw', 152, 5, 10, 14)
+            self.draw_image('six_sm_dark.raw', 230, 1, 10, 14)
         elif (year == '0x7'):    
-            self.draw_image('seven_tiny.raw', 152, 5, 10, 14)
+            self.draw_image('seven_sm_dark.raw', 230, 1, 10, 14)
         elif (year == '0x8'):    
-            self.draw_image('eight_tiny.raw', 152, 5, 10, 14)
+            self.draw_image('eight_sm_dark.raw', 230, 1, 10, 14)
         elif (year == '0x9'):    
-            self.draw_image('nine_tiny.raw', 152, 5, 10, 14)
+            self.draw_image('nine_sm_dark.raw', 230, 1, 10, 14)
             
         if (ten_year == '0x0'):
-            self.draw_image('zero_tiny.raw', 142, 5, 10, 14)
+            self.draw_image('zero_sm_dark.raw', 220, 1, 10, 14)
         elif (ten_year == '0x10'):    
-            self.draw_image('one_tiny.raw', 142, 5, 10, 14)
+            self.draw_image('one_sm_dark.raw', 220, 1, 10, 14)
         elif (ten_year == '0x20'):    
-            self.draw_image('two_tiny.raw', 142, 5, 10, 14)
+            self.draw_image('two_sm_dark.raw', 220, 1, 10, 14)
         elif (ten_year == '0x30'):    
-            self.draw_image('three_tiny.raw', 142, 5, 10, 14)
+            self.draw_image('three_sm_dark.raw', 220, 1, 10, 14)
         elif (ten_year == '0x40'):    
-            self.draw_image('four_tiny.raw', 142, 5, 10, 14)
+            self.draw_image('four_sm_dark.raw', 220, 1, 10, 14)
         elif (ten_year == '0x50'):    
-            self.draw_image('five_tiny.raw', 142, 5, 10, 14)
+            self.draw_image('five_sm_dark.raw', 220, 1, 10, 14)
         elif (ten_year == '0x60'):    
-            self.draw_image('six_tiny.raw', 142, 5, 10, 14)
+            self.draw_image('six_sm_dark.raw', 220, 1, 10, 14)
         elif (ten_year == '0x70'):    
-            self.draw_image('seven_tiny.raw', 142, 5, 10, 14)
+            self.draw_image('seven_sm_dark.raw', 220, 1, 10, 14)
         elif (ten_year == '0x80'):    
-            self.draw_image('eight_tiny.raw', 142, 5, 10, 14)
+            self.draw_image('eight_sm_dark.raw', 220, 1, 10, 14)
         elif (ten_year == '0x90'):    
-            self.draw_image('nine_tiny.raw', 142, 5, 10, 14)
+            self.draw_image('nine_sm_dark.raw', 220, 1, 10, 14)
         
-    def draw_bluetooth(self):
-        self.draw_image('bluetooth.raw', 225, 5, 10, 14)
+    # def draw_bluetooth(self):
+    #     self.draw_image('bluetooth.raw', 225, 5, 10, 14)
 
-    def remove_bluetooth(self):
-        self.display.fill_rectangle(225, 5, 10, 14, color565( 218, 193, 144 ))
+    # def remove_bluetooth(self):
+    #     self.display.fill_rectangle(225, 5, 10, 14, color565( 218, 193, 144 ))
 
     def draw_wifi(self):
-        self.draw_image('wifi.raw', 205, 6, 14, 10)
+        self.draw_image('wifi.raw', 2, 2, 14, 10)
         
     def remove_wifi(self):
-        self.display.fill_rectangle(205, 6, 14, 10, color565( 218, 193, 144 ))
+        self.display.fill_rectangle(2, 2, 14, 10, color565( 37, 36, 34 ))
 
     def draw_connecting(self):
-        self.draw_image('dots.raw', 205, 6, 14, 10)
+        self.draw_image('dots.raw', 2, 2, 14, 10)
         
 class Secondary_Display():
     def __init__(self):
@@ -418,7 +463,6 @@ class Secondary_Display():
         self.spi_display = SPI(0, 40_000_000, mosi=SPI0_TX, miso=SPI0_RX, sck=SPI0_SCK)
         
         self.display = Display(self.spi_display, cs=SPI0_CSn_left, dc=SPI0_DC_left, rst=SPI0_RESET_left)
-        self.display.clear(color565( 218, 193, 144 ))
         self.draw_image('secondary_screen_layout.raw', 0, 0, 240, 320)
 
     def draw_image(self, image, x, y, width, height):
@@ -527,7 +571,6 @@ class WiFi():
                     
                 print('connected! ip=', self.wlan.ifconfig()[0])
                 main_os.main_display.draw_wifi()
-                main_os.secondary_display.display.clear(color565( 218, 193, 144 ))
 
             elif available_network[0] == b'NETGEAR03':
                 self.wlan.connect('NETGEAR03', 'blackkayak533')
@@ -538,7 +581,6 @@ class WiFi():
                     
                 print('connected! ip=', self.wlan.ifconfig()[0])
                 main_os.main_display.draw_wifi()
-                main_os.secondary_display.display.clear(color565( 218, 193, 144 ))
    
             elif available_network[0] == b'UWNet':
                 self.wlan.connect('UWNet')
@@ -549,7 +591,6 @@ class WiFi():
                     
                 print('connected! ip=', self.wlan.ifconfig()[0])
                 main_os.main_display.draw_wifi()
-                main_os.secondary_display.display.clear(color565( 218, 193, 144 ))
                 
     async def disconnect(self):
         main_os.main_display.draw_connecting()
@@ -575,19 +616,16 @@ class schedule_app():
         
     def open_app(self):
         print(self.app_name)
-        main_os.secondary_display.display.draw_text(5, 0, self.app_name, arcadepix, color565(194, 194, 194), background=color565(52, 51, 50))
-#         connected = main_os.wifi.status()
-#         if connected:
-#             main_os.secondary_display.display.clear(color565( 218, 193, 144 ))
-#             main_os.secondary_display.display.draw_text8x8(70, 155, 'Loading...', color565(0, 0, 0), background=color565( 218, 193, 144 ))
-#             self.request()
-#             self.draw_info()
-#         elif self.resp != None:
-#             main_os.secondary_display.display.clear(color565( 218, 193, 144 ))
-#             self.draw_info()
-#         else:
-#             main_os.secondary_display.display.clear(color565( 218, 193, 144 ))
-#             main_os.secondary_display.display.draw_text8x8(65, 155, 'Not Connected', color565(0, 0, 0), background=color565( 218, 193, 144 ))
+        main_os.secondary_display.display.draw_text(5, 2, self.app_name, arcadepix, color565(194, 194, 194), background=color565(37, 36, 34))
+        connected = main_os.wifi.status()
+        if connected:
+            main_os.secondary_display.display.draw_text8x8(70, 155, 'Loading...', color565(194, 194, 194), background=color565( 52, 51, 50 ))
+            self.request()
+            self.draw_info()
+        elif self.resp != None:
+            self.draw_info()
+        else:
+            main_os.secondary_display.display.draw_text8x8(65, 155, 'Not Connected', color565(194, 194, 194), background=color565( 52, 51, 50 ))
     
     def close_app(self):
         main_os.secondary_display.display.draw_image('secondary_screen_layout.raw', 0, 0, 240, 320)
@@ -597,13 +635,15 @@ class schedule_app():
             r = urequests.get(self.endpoint)
             self.resp = r.json()
             self.latest_resp_code = r.status_code
+            print(self.resp)
             r.close()
         except OSError as e:
-            main_os.secondary_display.display.draw_text8x8(65, 155, 'Request Failed', color565(0, 0, 0), background=color565( 218, 193, 144 ))
+            main_os.secondary_display.display.draw_text8x8(65, 155, 'Request Failed', color565(194, 194, 194), background=color565( 52, 51, 50 ))
     
     def draw_info(self):
         if self.latest_resp_code == 200:
-            main_os.secondary_display.display.clear(color565( 218, 193, 144 ))
+#TODO
+#clear middle box
             for i in range(0, len(self.resp)):
                 home_team = self.resp[i]['Home_Team']
                 away_team = self.resp[i]['Away_Team']
@@ -612,32 +652,32 @@ class schedule_app():
                 date = self.resp[i]['Date']
                 time = self.resp[i]['Time']
                 if i == 0:
-                    main_os.secondary_display.display.draw_text8x8(15, 10, f"{date} - {time}", color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 20, f"{home_team} - {home_score}", color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 30, 'vs', color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 40, f"{away_team} - {away_score}", color565(0, 0, 0), background=color565(218, 193, 144))
+                    main_os.secondary_display.display.draw_text8x8(15, 25, f"{date} - {time}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 35, f"{home_team} - {home_score}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 45, 'vs', color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 55, f"{away_team} - {away_score}", color565(194, 194, 194), background=color565(52, 51, 50))
                 elif i == 1:
-                    main_os.secondary_display.display.draw_text8x8(15, 70, f"{date} - {time}", color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 80, f"{home_team} - {home_score}", color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 90, 'vs', color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 100, f"{away_team} - {away_score}", color565(0, 0, 0), background=color565(218, 193, 144))
+                    main_os.secondary_display.display.draw_text8x8(15, 85, f"{date} - {time}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 95, f"{home_team} - {home_score}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 105, 'vs', color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 115, f"{away_team} - {away_score}", color565(194, 194, 194), background=color565(52, 51, 50))
                 elif i == 2:
-                    main_os.secondary_display.display.draw_text8x8(15, 130, f"{date} - {time}", color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 140, f"{home_team} - {home_score}", color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 150, 'vs', color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 160, f"{away_team} - {away_score}", color565(0, 0, 0), background=color565(218, 193, 144))
+                    main_os.secondary_display.display.draw_text8x8(15, 145, f"{date} - {time}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 155, f"{home_team} - {home_score}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 165, 'vs', color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 175, f"{away_team} - {away_score}", color565(194, 194, 194), background=color565(52, 51, 50))
                 elif i == 3:
-                    main_os.secondary_display.display.draw_text8x8(15, 190, f"{date} - {time}", color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 200, f"{home_team} - {home_score}", color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 210, 'vs', color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 220, f"{away_team} - {away_score}", color565(0, 0, 0), background=color565(218, 193, 144))
+                    main_os.secondary_display.display.draw_text8x8(15, 205, f"{date} - {time}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 215, f"{home_team} - {home_score}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 225, 'vs', color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 235, f"{away_team} - {away_score}", color565(194, 194, 194), background=color565(52, 51, 50))
                 elif i == 4:
-                    main_os.secondary_display.display.draw_text8x8(15, 250, f"{date} - {time}", color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 260, f"{home_team} - {home_score}", color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 270, 'vs', color565(0, 0, 0), background=color565(218, 193, 144))
-                    main_os.secondary_display.display.draw_text8x8(15, 280, f"{away_team} - {away_score}", color565(0, 0, 0), background=color565(218, 193, 144))
+                    main_os.secondary_display.display.draw_text8x8(15, 265, f"{date} - {time}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 275, f"{home_team} - {home_score}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 285, 'vs', color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 295, f"{away_team} - {away_score}", color565(194, 194, 194), background=color565(52, 51, 50))
         elif self.latest_resp_code == 404:
-                main_os.secondary_display.display.draw_text8x8(65, 155, 'No Games Found', color565(0, 0, 0), background=color565( 218, 193, 144 ))
+                main_os.secondary_display.display.draw_text8x8(65, 155, 'No Games Found', color565(194, 194, 194), background=color565( 52, 51, 50 ))
     
     
 class wifi_app():
@@ -646,7 +686,7 @@ class wifi_app():
         self.icon = icon
         self.wifi = wifi
         
-    def open_app(self):
+    async def open_app(self):
         if self.wifi.status():
             await self.wifi.disconnect()
         else:
@@ -685,11 +725,11 @@ packers_app = schedule_app('Packers Schedule', 'packers_app_icon.raw', 'https://
 brewers_app = schedule_app('Brewers Schedule', 'brewers_app_icon.raw', 'https://qgk63yzapnm7q7i7jefehuopkm0xnwro.lambda-url.us-east-2.on.aws/')
 bucks_app = schedule_app('Bucks Schedule',  'bucks_app_icon.raw', 'https://6puu43kgcctatxxjax6dew5p7u0tjpaf.lambda-url.us-east-2.on.aws/')
 badgers_app = schedule_app('Badgers Schedule', 'badgers_app_icon.raw', 'https://rrrrlgrot7knkm7twzqzfi6cda0mepib.lambda-url.us-east-2.on.aws/')
-wifi_app = wifi_app('WiFi', 'settings_app_icon.raw', wifi)
+settings_app = wifi_app('WiFi', 'settings_app_icon.raw', wifi)
 clear_sec_screen_app = clear_sec_screen_app('Clear Screen', 'clear_app_icon.raw', secondary_display)
 
 global main_os
-main_os = monk_os(main_display, secondary_display, wifi, clock, [packers_app, brewers_app, bucks_app, badgers_app, wifi_app, clear_sec_screen_app])
+main_os = monk_os(main_display, secondary_display, wifi, clock, [packers_app, brewers_app, bucks_app, badgers_app, settings_app, clear_sec_screen_app])
 
 async def task_update_screen():
     while True:
@@ -709,7 +749,7 @@ async def task_sec_display_toggle():
 async def main_scheduler():
     # Create async tasks
     await asyncio.gather(
-#         asyncio.create_task(task_update_screen()),
+        asyncio.create_task(task_update_screen()),
         asyncio.create_task(task_touch()),
         asyncio.create_task(task_sec_display_toggle())
     )

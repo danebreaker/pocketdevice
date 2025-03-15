@@ -47,10 +47,10 @@ def main():
     display.draw_text(55, 75, 'Sunday', arcadepix, color565(194, 194, 194), background=color565(52, 51, 50))
     
     #time
-    display.draw_image('zero_white.raw', 45, 90, 45, 65)
-    display.draw_image('zero_white.raw', 95, 90, 45, 65)
-    display.draw_image('zero_white.raw', 45, 160, 45, 65)
-    display.draw_image('zero_white.raw', 95, 160, 45, 65)
+    display.draw_image('zero_white.raw', 45, 90, 45, 65) #ten hour
+    display.draw_image('zero_white.raw', 95, 90, 45, 65) #hour
+    display.draw_image('zero_white.raw', 45, 160, 45, 65) #ten min
+    display.draw_image('zero_white.raw', 95, 160, 45, 65) #min
     
     #seconds
     display.draw_image('zero_tiny_white.raw', 53, 230, 10, 14)
