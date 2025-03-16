@@ -1,0 +1,128 @@
+Removed Pin From Net: NetName=I2C_SCL Pin=J1-15
+Removed Pin From Net: NetName=I2C_SDA Pin=J1-16
+Change Component Description : Designator=PICO Old Description=Raspberry Pi Board, Arm Cortex-M0+; Silicon Manufacturer:Raspberry Pi; No. Of Bits:32Bit; Silicon Family Name:-; Core Architecture:Arm; Core Sub-Architecture:Cortex-M0+; Silicon Core Number:Rp2040; Product Range:Raspberry Pi Pico Rohs Compliant: Yes New Description=Raspberry Pi Board, Arm Cortex-M0+; Silicon Manufacturer:Raspberry Pi; No. Of Bits:32Bit; Silicon Family Name:-; Core Architecture:Arm; Core Sub-Architecture:Cortex-M0+; Silicon Core Number:Rp2040; Product Range:Raspberry Pi Pico Rohs Compliant: Yes |Raspberry-Pi RASPBERRY PI PICO W
+Added Component: Designator=Clock Module(61300411121)
+Add component (AddParameter): Name = "Color"; Value = "Black"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Connector Type"; Value = "Male Pin"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Contact Material"; Value = "Copper"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Contact Mating Length"; Value = "5.9944mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Contact Plating"; Value = "Gold"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Contact Resistance"; Value = "20mO"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Current Rating"; Value = "3A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Gender"; Value = "Male"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "8.89mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Lead Free"; Value = "Lead Free"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Lead Pitch"; Value = "2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Operating Temperature"; Value = "105°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Min Operating Temperature"; Value = "-40°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mount"; Value = "Through Hole"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NexarPartId"; Value = "32855522"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Number of Contacts"; Value = "4"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Number of Pins"; Value = "4"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Number of Positions"; Value = "4"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Number of Rows"; Value = "1"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Operating Supply Voltage"; Value = "250V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Orientation"; Value = "Vertical"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Packaging"; Value = "Bulk"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "REACH SVHC"; Value = "Unknown"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS"; Value = "Compliant"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Termination"; Value = "Solder"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage Rating"; Value = "250V"; VariantName = "[No Variations]"
+Added Component: Designator=J2(MOLX-52271-2079)
+Add component (AddParameter): Name = "Circuits (Loaded)"; Value = "20"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Manufacturer URL"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.molex.com/molex/index.jsp"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "Datasheet"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "http://www.molex.com/webdocs/datasheets/pdf/en-us/0522712079_FFC_FPC_CONNECTORS.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink3Description"; Value = "Package Specification"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink3URL"; Value = "http://www.molex.com/pdm_docs/sd/522712079_sd.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Contact Position"; Value = "Bottom"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Current (Max per Contact)"; Value = "0.5A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Durability (mating cycles max)"; Value = "30"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Entry Angle"; Value = "90degrees Angle"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Molex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mated Height"; Value = "3.00mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Material - Metal"; Value = "Phosphor Bronze"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Material - Plating Mating"; Value = "Tin-Bismuth"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Material - Plating Termination"; Value = "Tin-Bismuth"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mounting Technology"; Value = "Surface Mount"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Number of Rows"; Value = "1"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Orientation"; Value = "Right Angle"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "20-Lead FPC Connector, Pitch 1.0 mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "52271-2079"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageVersion"; Value = "Rev. B, 04/2004"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Packing"; Value = "Tape and Reel"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PartNumber"; Value = "52271-2079"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PCB Locator"; Value = "No"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PCB Retention"; Value = "Yes"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch - Mating Interface"; Value = "1.00mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch - Termination Interface"; Value = "1.00mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Polarized to PCB"; Value = "Yes"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS"; Value = "TRUE"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Stackable"; Value = "No"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage (Max)"; Value = "50V AC (RMS)/DC"; VariantName = "[No Variations]"
+Added Component: Designator=Secondary Display(61301611121)
+Add component (AddParameter): Name = "Color"; Value = "Black"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Connector Type"; Value = "Male Pin"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Contact Material"; Value = "Copper"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Contact Mating Length"; Value = "5.9944mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Contact Plating"; Value = "Gold"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Contact Resistance"; Value = "20mO"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Current Rating"; Value = "3A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Gender"; Value = "Male"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "8.89mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Lead Pitch"; Value = "2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Operating Temperature"; Value = "105°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Min Operating Temperature"; Value = "-40°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mount"; Value = "Through Hole"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NexarPartId"; Value = "32855548"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Number of Contacts"; Value = "16"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Number of Pins"; Value = "16"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Number of Positions"; Value = "16"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Number of Rows"; Value = "1"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Operating Supply Voltage"; Value = "250V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Orientation"; Value = "Vertical"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Packaging"; Value = "Bulk"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pitch"; Value = "2.54mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "REACH SVHC"; Value = "Unknown"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS"; Value = "Compliant"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Termination"; Value = "Solder"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage Rating"; Value = "250V"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=I2C_SDA Pin=J1-15
+Added Pin To Net: NetName=I2C_SCL Pin=J1-16
+Added Pin To Net: NetName=VCC Pin=J2-1
+Added Pin To Net: NetName=VCC Pin=J2-2
+Added Pin To Net: NetName=SPI0_CSn_LEFT Pin=J2-3
+Added Pin To Net: NetName=SPI0_RESET_LEFT Pin=J2-4
+Added Pin To Net: NetName=SPI0_DC_LEFT Pin=J2-5
+Added Pin To Net: NetName=SPI0_TX Pin=J2-6
+Added Pin To Net: NetName=SPI0_SCK Pin=J2-7
+Added Pin To Net: NetName=SEC_SCREEN_BACKLIGHT Pin=J2-8
+Added Pin To Net: NetName=SPI0_RX Pin=J2-9
+Added Pin To Net: NetName=T_CLK Pin=J2-10
+Added Pin To Net: NetName=T2_CS Pin=J2-11
+Added Pin To Net: NetName=T_DIN Pin=J2-12
+Added Pin To Net: NetName=T_DO Pin=J2-13
+Added Pin To Net: NetName=T_IRQ Pin=J2-14
+Added Pin To Net: NetName=I2C_SDA Pin=J2-15
+Added Pin To Net: NetName=I2C_SCL Pin=J2-16
+Added Pin To Net: NetName=GND Pin=J2-19
+Added Pin To Net: NetName=GND Pin=J2-20
+Added Pin To Net: NetName=T_IRQ Pin=Secondary Display-2
+Added Pin To Net: NetName=T_DO Pin=Secondary Display-3
+Added Pin To Net: NetName=T_DIN Pin=Secondary Display-4
+Added Pin To Net: NetName=T_CS Pin=Secondary Display-5
+Added Pin To Net: NetName=T_CLK Pin=Secondary Display-6
+Added Pin To Net: NetName=SPI0_RX Pin=Secondary Display-7
+Added Pin To Net: NetName=VCC Pin=Secondary Display-8
+Added Pin To Net: NetName=SPI0_CLK Pin=Secondary Display-9
+Added Pin To Net: NetName=SPI0_TX Pin=Secondary Display-10
+Added Pin To Net: NetName=SPI0_DC_RIGHT Pin=Secondary Display-11
+Added Pin To Net: NetName=SPI0_RESET_RIGHT Pin=Secondary Display-12
+Added Pin To Net: NetName=SPI0_CSn_RIGHT Pin=Secondary Display-13
+Added Pin To Net: NetName=GND Pin=Secondary Display-14
+Added Pin To Net: NetName=VCC Pin=Secondary Display-15
+Added Member To Class: ClassName=Secondary_Display Member=Component Clock Module 61300411121
+Added Member To Class: ClassName=Secondary_Display Member=Component J2 52271-2079
+Added Member To Class: ClassName=Secondary_Display Member=Component Secondary Display 61301611121
