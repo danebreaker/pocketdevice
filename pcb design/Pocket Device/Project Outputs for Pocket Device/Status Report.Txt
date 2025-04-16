@@ -1,0 +1,12 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : PCB Document [Secondary Display.PcbDoc]
+   Generated File[Secondary Display.TXT]
+   Generated File[Secondary Display.LDP]
+   Generated File[Secondary Display.DRR]
+
+
+Files Generated   : 3
+Documents Printed : 0
+
+Finished Output Generation At 10:06:17 AM On 3/18/2025

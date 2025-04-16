@@ -1,0 +1,407 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 9em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD25\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">3/17/2025</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">9:55:56 PM</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:00</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc" class="file"><acronym title="C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc">C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">21</td></tr>
+</table>
+</td>
+</table><a name="IDSU0P3DHYJZWXLUKA2NTD5DYHRHZ505BJNC1EOTKVTPH3KLRMGGHE"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDPXA1Q5FB2KAXF2V2GEYZIL3IOKOYKDKIMMZRDOI51J1HMP0Z2SLD">Clearance Constraint (Gap=0.2mm) (All),(All)</a></td>
+<td class="column2">2</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDZALA1W22QR4FIMT0W1WKTKGIXKJ5HTBCXPFIA4OIFJHES15RIXSL">Clearance Constraint (Gap=0.2mm) (All),(InPolygon)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDLMPMCAMQGVV5BJAPJUHJBYGUTD5MGNLQO3YG4FDO1YFRICHVJQKE">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDYZX3DRPJRLPMHRSAXSZYLDBRSCEDZ4DT5QZIZSOTNJFGLWF14ULP">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDRDKTFRSI13XIOBGRFIQGEXIOCNXMMB0QEOATB1KWVJEH2GCDFD4J">Un-Connected Pin Constraint ( (Disabled)(All) )</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDLFSYCN5R0XEGGZDBR1K5LLSM2HNVBDYWHCEYR2PB3ZGIZSEHD5DO">Width Constraint (Min=0.2mm) (Max=10mm) (Preferred=0.3mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDMIOZNHDQUSV1DIRU2G2I2GOA3LF15V3R01QYZ0ISD3AT2AH2G15I">Power Plane Connect Rule(Relief Connect )(Expansion=0.3mm) (Conductor Width=0.3mm) (Air Gap=0.3mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDGQ3QAASAFMRNCA4Y4H45Y4DW0DOVKDVSP5CQ2THIVARFWK4CGFJM">Minimum Annular Ring (Minimum=0.15mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDDO45IR5TTIFQBP2AJAIPNM3YNNSM3S2JXEJJ2PCUG3ZPKQPRIQB">Hole Size Constraint (Min=0.3mm) (Max=6.35mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDTRFOKGHZUJ4VGWICSDCPJKKDC5ZKYBBFWRFO4LEPZN14DCRI4OP">Hole To Hole Clearance (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDW51YYGTWNIWPBSFG3E5INUNICPVJT41HVQB32KP1IBTWP0UTWOAL">Minimum Solder Mask Sliver (Gap=0.2mm) (All),(All)</a></td>
+<td class="column2">19</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDR532XY04YCGXNKO5D5QXLECJXCPUBIPLTNUF4POW0F0MGOS1ZVLK">Silk To Solder Mask (Clearance=0mm) (IsPad),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDESLHDWDREJ5JMPG2F1WB1TOG0KIR4RP3FTZEDBIRBDRUWJEVI0GP">Silk to Silk (Clearance=0mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID5ZKEMG5UI4X3BZI0YZIKDCOE0FW4OGTA5LIPWT2FNES4ZUKWYRL">Net Antennae (Tolerance=0mm) (InNet('5.0V'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDLFSIMZ4ACXNWGCVFLF11F1DI2PEA5CX0C0BDCQELELUEILOXBOMC">Net Antennae (Tolerance=0mm) (InNet('3.3V'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDKFH4M5IYXMFFCT402BIFVDOFIBH0QRCSAYGA3LI4BJTPGKI2TWML">Height Constraint (Min=0mm) (Max=75mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">21</td>
+</tr>
+</table><br><a name="IDPXA1Q5FB2KAXF2V2GEYZIL3IOKOYKDKIMMZRDOI51J1HMP0Z2SLD"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Clearance Constraint (Gap=0.2mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13470.241mil|Location2.X=13479.365mil|Location1.Y=3387.011mil|Location2.Y=3396.135mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13470.241mil|Location2.X=13479.365mil|Location1.Y=3387.011mil|Location2.Y=3396.135mil|Absolute=True">Clearance Constraint: (0mm &lt; 0.2mm) Between Area Fill (35.95mm,27.375mm) (37.6mm,28.975mm) on Keep-Out Layer And Pad J2-MP2(36.775mm,30.05mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13534.671mil|Location2.X=13540.92mil|Location1.Y=2475.064mil|Location2.Y=2481.313mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13534.671mil|Location2.X=13540.92mil|Location1.Y=2475.064mil|Location2.Y=2481.313mil|Absolute=True">Clearance Constraint: (Collision &lt; 0.2mm) Between Area Fill (35.95mm,5.825mm) (37.6mm,7.425mm) on Keep-Out Layer And Pad J2-MP1(36.775mm,4.75mm) on Top Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDW51YYGTWNIWPBSFG3E5INUNICPVJT41HVQB32KP1IBTWP0UTWOAL"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Minimum Solder Mask Sliver (Gap=0.2mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2575.988mil|Location2.Y=2585.113mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2575.988mil|Location2.Y=2585.113mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-1(34.425mm,7.9mm) on Top Layer And Pad J2-2(34.425mm,8.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2930.319mil|Location2.Y=2939.443mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2930.319mil|Location2.Y=2939.443mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-10(34.425mm,16.9mm) on Top Layer And Pad J2-11(34.425mm,17.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2890.949mil|Location2.Y=2900.073mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2890.949mil|Location2.Y=2900.073mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-10(34.425mm,16.9mm) on Top Layer And Pad J2-9(34.425mm,15.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2969.689mil|Location2.Y=2978.813mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2969.689mil|Location2.Y=2978.813mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-11(34.425mm,17.9mm) on Top Layer And Pad J2-12(34.425mm,18.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3009.059mil|Location2.Y=3018.183mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3009.059mil|Location2.Y=3018.183mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-12(34.425mm,18.9mm) on Top Layer And Pad J2-13(34.425mm,19.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3048.43mil|Location2.Y=3057.553mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3048.43mil|Location2.Y=3057.553mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-13(34.425mm,19.9mm) on Top Layer And Pad J2-14(34.425mm,20.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3087.8mil|Location2.Y=3096.923mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3087.8mil|Location2.Y=3096.923mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-14(34.425mm,20.9mm) on Top Layer And Pad J2-15(34.425mm,21.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3127.17mil|Location2.Y=3136.294mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3127.17mil|Location2.Y=3136.294mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-15(34.425mm,21.9mm) on Top Layer And Pad J2-16(34.425mm,22.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3166.54mil|Location2.Y=3175.664mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3166.54mil|Location2.Y=3175.664mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-16(34.425mm,22.9mm) on Top Layer And Pad J2-17(34.425mm,23.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3205.91mil|Location2.Y=3215.034mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3205.91mil|Location2.Y=3215.034mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-17(34.425mm,23.9mm) on Top Layer And Pad J2-18(34.425mm,24.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3245.28mil|Location2.Y=3254.404mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3245.28mil|Location2.Y=3254.404mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-18(34.425mm,24.9mm) on Top Layer And Pad J2-19(34.425mm,25.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3284.65mil|Location2.Y=3293.774mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=3284.65mil|Location2.Y=3293.774mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-19(34.425mm,25.9mm) on Top Layer And Pad J2-20(34.425mm,26.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2615.359mil|Location2.Y=2624.483mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2615.359mil|Location2.Y=2624.483mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-2(34.425mm,8.9mm) on Top Layer And Pad J2-3(34.425mm,9.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2654.729mil|Location2.Y=2663.853mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2654.729mil|Location2.Y=2663.853mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-3(34.425mm,9.9mm) on Top Layer And Pad J2-4(34.425mm,10.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2694.099mil|Location2.Y=2703.223mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2694.099mil|Location2.Y=2703.223mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-4(34.425mm,10.9mm) on Top Layer And Pad J2-5(34.425mm,11.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2733.469mil|Location2.Y=2742.593mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2733.469mil|Location2.Y=2742.593mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-5(34.425mm,11.9mm) on Top Layer And Pad J2-6(34.425mm,12.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2772.839mil|Location2.Y=2781.963mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2772.839mil|Location2.Y=2781.963mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-6(34.425mm,12.9mm) on Top Layer And Pad J2-7(34.425mm,13.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2812.209mil|Location2.Y=2821.333mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2812.209mil|Location2.Y=2821.333mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-7(34.425mm,13.9mm) on Top Layer And Pad J2-8(34.425mm,14.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2851.579mil|Location2.Y=2860.703mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Secondary Display.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=13450.618mil|Location2.X=13459.742mil|Location1.Y=2851.579mil|Location2.Y=2860.703mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.2mm) Between Pad J2-8(34.425mm,14.9mm) on Top Layer And Pad J2-9(34.425mm,15.9mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>

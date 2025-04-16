@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+
+        <title>HG Core API</title>
+    </header>
+
+    <body class="is-family-code">
+        <div class="header">
+            <p class="is-size-1 has-text-weight-bold">HG Core API Documentation</p>
+        </div>
+        
+        <div class="main">
+            <div class="endpoints">
+                <table class="table">
+                    <p class="is-size-3 has-text-weight-semibold">Brewers</p>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Path</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="endpoint">
+                            <td><p class="method has-text-weight-semibold">GET</p></td>
+                            <td><p class="path"><a href="http://localhost:8000/brewers/" target="_blank ">/brewers</a></p></td>
+                            <td><p class="description">Returns next 5 games, including previous game if its within 12 hours.</p></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table">
+                    <p class="is-size-3 has-text-weight-semibold">Bucks</p>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Path</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="endpoint">
+                            <td><p class="method has-text-weight-semibold">GET</p></td>
+                            <td><p class="path"><a href="http://localhost:8000/bucks/" target="_blank ">/bucks</a></p></td>
+                            <td><p class="description">Returns next 5 games, including previous game if its within 12 hours.</p></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table">
+                    <p class="is-size-3 has-text-weight-semibold">Formula 1</p>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Path</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="endpoint">
+                            <td><p class="method has-text-weight-semibold">GET</p></td>
+                            <td><p class="path"><a href="http://localhost:8000/f1/" target="_blank ">/f1</a></p></td>
+                            <td><p class="description">Returns next 5 races, including previous race if its within 12 hours.</p></td>
+                        </tr>
+
+                        <tr class="endpoint">
+                            <td><p class="method has-text-weight-semibold">GET</p></td>
+                            <td><p class="path"><a href="http://localhost:8000/f1/gp" target="_blank ">/f1/gp</a></p></td>
+                            <td><p class="description">Returns next 5 grand prix's</p></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table">
+                    <p class="is-size-3 has-text-weight-semibold">Word of the Day</p>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Path</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="endpoint">
+                            <td><p class="method has-text-weight-semibold">GET</p></td>
+                            <td><p class="path"><a href="http://localhost:8000/brewers/" target="_blank ">/en</a></p></td>
+                            <td><p class="description">Returns word the day in english, along with a definition</p></td>
+                        </tr>
+
+                        <tr class="endpoint">
+                            <td><p class="method has-text-weight-semibold">GET</p></td>
+                            <td><p class="path"><a href="http://localhost:8000/brewers/" target="_blank ">/fr</a></p></td>
+                            <td><p class="description">Returns word the day in french, along with a definition</p></td>
+                        </tr>
+
+                        <tr class="endpoint">
+                            <td><p class="method has-text-weight-semibold">GET</p></td>
+                            <td><p class="path"><a href="http://localhost:8000/brewers/" target="_blank ">/it</a></p></td>
+                            <td><p class="description">Returns word the day in italian, along with a definition</p></td>
+                        </tr>
+
+                        <tr class="endpoint">
+                            <td><p class="method has-text-weight-semibold">GET</p></td>
+                            <td><p class="path"><a href="http://localhost:8000/brewers/" target="_blank ">/sp</a></p></td>
+                            <td><p class="description">Returns word the day in spanish, along with a definition</p></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+
+    <script>
+
+    </script>
+</html>

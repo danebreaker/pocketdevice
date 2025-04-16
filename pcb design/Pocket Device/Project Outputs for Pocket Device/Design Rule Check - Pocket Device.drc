@@ -1,7 +1,7 @@
 Protel Design System Design Rule Check
 PCB File : C:\Users\daneb\Documents\GitHub\pocketdevice\pcb design\Pocket Device\Pocket Device.PcbDoc
-Date     : 3/15/2025
-Time     : 3:53:13 PM
+Date     : 3/17/2025
+Time     : 9:08:34 PM
 
 Processing Rule : Clearance Constraint (Gap=0.2mm) (All),(All)
    Violation between Clearance Constraint: (Collision < 0.2mm) Between Area Fill (5.325mm,43.225mm) (6.975mm,44.825mm) on Keep-Out Layer And Pad J1-MP1(6.15mm,42.15mm) on Bottom Layer 
@@ -63,10 +63,10 @@ Rule Violations :0
 Processing Rule : Silk to Silk (Clearance=0mm) (All),(All)
 Rule Violations :0
 
-Processing Rule : Net Antennae (Tolerance=0mm) (InNet('3.3V'))
+Processing Rule : Net Antennae (Tolerance=0mm) (InNet('5.0V'))
 Rule Violations :0
 
-Processing Rule : Net Antennae (Tolerance=0mm) (InNet('5.0V'))
+Processing Rule : Net Antennae (Tolerance=0mm) (InNet('3.3V'))
 Rule Violations :0
 
 Processing Rule : Height Constraint (Min=0mm) (Max=75mm) (Prefered=12.7mm) (All)

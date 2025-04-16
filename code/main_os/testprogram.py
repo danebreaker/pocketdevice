@@ -1,0 +1,8 @@
+brewers_sched_cache = open("brewers_sched_cache.csv", "r+")
+brewers_sched_cache.write(str("Event_ID,Event,Season,Home_Team_ID,Home_Score,Away_Team_ID,Away_Score,Date,Event_Thumbnail,Venue_ID,Venue")+",")
+brewers_sched_cache.write(str("2224842,Milwaukee Brewers vs Arizona Diamondbacks,2025,135274,,135267,,1742623800000,https://r2.thesportsdb.com/images/media/event/thumb/eivfpm1740476741.jpg,30986,American Family Field")+",")
+brewers_sched_cache.write(str("2232125,Athletics vs Milwaukee Brewers,2025,135261,,135274,,1742691900000,https://www.thesportsdb.com/images/media/event/thumb/pytl401741703277.jpg,31213,Sutter Health Park")+",")
+brewers_sched_cache.write(str("2224868,Milwaukee Brewers vs Colorado Rockies,2025,135274,,135271,,1742778600000,https://r2.thesportsdb.com/images/media/event/thumb/vwn0r91740476766.jpg,30986,American Family Field")+",")
+brewers_sched_cache.write(str("2224869,Seattle Mariners vs Milwaukee Brewers,2025,135262,,135274,,1742778600000,https://r2.thesportsdb.com/images/media/event/thumb/jga8s51740476767.jpg,30988,T-Mobile Park")+",")
+brewers_sched_cache.write(str("2227360,Colorado Rockies vs Milwaukee Brewers,2025,135271,,135274,,1742861400000,https://www.thesportsdb.com/images/media/event/thumb/dtipwp1706699514.jpg,30978,Coors Field"))
+brewers_sched_cache.close()

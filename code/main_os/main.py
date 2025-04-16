@@ -6,6 +6,7 @@ import urequests
 from xpt2046 import Touch
 import asyncio
 from xglcd_font import XglcdFont
+import time
 
 # Pin Configurations
 
@@ -19,7 +20,7 @@ SPI0_RESET_left = Pin(2)
 SPI0_DC_right = Pin(21)
 SPI0_DC_left = Pin(3)
 
-T_IRQ = Pin(11)
+#T_IRQ = Pin(11)
 T_DO = Pin(12)
 T_CS = Pin(13)
 T_CLK = Pin(14)
@@ -71,6 +72,7 @@ class monk_os():
     async def handle_touch(self):
         touch = self.main_display.touch.raw_touch()
         touch2 = self.secondary_display.touch.raw_touch()
+        #print(touch2)
         if touch is not None:
             x,y = touch
 #             print(x,y)
@@ -126,6 +128,9 @@ class monk_os():
                     else:
                         self.shown_apps[2].open_app()
                     self.open_app = self.shown_apps[2]
+                
+            else:
+                await self.load_data()
                     
             self.prev_touch_coords = [x, y]
         else:
@@ -140,6 +145,25 @@ class monk_os():
             elif SECONDARY_SCREEN_BACKLIGHT.value() == 0:
                 SECONDARY_SCREEN_BACKLIGHT.value(1)
         self.prev_sec_display_toggle = button_status
+        
+        
+    def write_cache(self, file, data):
+        cached_sched = open(file, 'w')
+        cached_sched.write(str(data))
+        cached_sched.close()
+        self.secondary_display.display.draw_text8x8(65, 155, 'All Data Loaded', color565(194, 194, 194), background=color565( 52, 51, 50 ))
+        
+        
+    async def load_data(self):
+        await self.wifi.connect()
+        for app in self.apps:
+            print(app.app_name)
+            try:
+                if app.endpoint != None:
+                    app.request()
+                    self.write_cache(app.file_name, app.resp)
+            except:
+                pass
         
 class Main_Display():
     def __init__(self):
@@ -616,10 +640,11 @@ class WiFi():
         main_os.main_display.remove_wifi()
 
 class schedule_app():
-    def __init__(self, app_name, icon, endpoint=None):
+    def __init__(self, app_name, icon, file_name, endpoint=None):
         self.app_name = app_name
         self.endpoint = endpoint
         self.icon = icon
+        self.file_name = file_name
         self.resp = None
         self.latest_resp_code = 0
         
@@ -631,6 +656,7 @@ class schedule_app():
             main_os.secondary_display.display.draw_text8x8(70, 155, 'Loading...', color565(194, 194, 194), background=color565( 52, 51, 50 ))
             self.request()
             self.draw_info()
+            self.write_cache()
         elif self.resp != None:
             self.draw_info()
         else:
@@ -644,7 +670,6 @@ class schedule_app():
             r = urequests.get(self.endpoint)
             self.resp = r.json()
             self.latest_resp_code = r.status_code
-            print(self.resp)
             r.close()
         except OSError as e:
             main_os.secondary_display.display.draw_text8x8(65, 155, 'Request Failed', color565(194, 194, 194), background=color565( 52, 51, 50 ))
@@ -658,36 +683,41 @@ class schedule_app():
                 away_team = self.resp[i]['Away_Team']
                 home_score = self.resp[i]['Home_Score']
                 away_score = self.resp[i]['Away_Score']
-                date = self.resp[i]['Date']
-                time = self.resp[i]['Time']
+                date = time.localtime(self.resp[i]['Date'])
                 if i == 0:
-                    main_os.secondary_display.display.draw_text8x8(15, 25, f"{date} - {time}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 25, f"{date[1]}/{date[2]}/{date[0]} - {date[3] + 2}:{date[4]:02d}", color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 35, f"{home_team} - {home_score}", color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 45, 'vs', color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 55, f"{away_team} - {away_score}", color565(194, 194, 194), background=color565(52, 51, 50))
                 elif i == 1:
-                    main_os.secondary_display.display.draw_text8x8(15, 85, f"{date} - {time}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 85, f"{date[1]}/{date[2]}/{date[0]} - {date[3] + 2}:{date[4]:02d}", color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 95, f"{home_team} - {home_score}", color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 105, 'vs', color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 115, f"{away_team} - {away_score}", color565(194, 194, 194), background=color565(52, 51, 50))
                 elif i == 2:
-                    main_os.secondary_display.display.draw_text8x8(15, 145, f"{date} - {time}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 145, f"{date[1]}/{date[2]}/{date[0]} - {date[3] + 2}:{date[4]:02d}", color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 155, f"{home_team} - {home_score}", color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 165, 'vs', color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 175, f"{away_team} - {away_score}", color565(194, 194, 194), background=color565(52, 51, 50))
                 elif i == 3:
-                    main_os.secondary_display.display.draw_text8x8(15, 205, f"{date} - {time}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 205, f"{date[1]}/{date[2]}/{date[0]} - {date[3] + 2}:{date[4]:02d}", color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 215, f"{home_team} - {home_score}", color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 225, 'vs', color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 235, f"{away_team} - {away_score}", color565(194, 194, 194), background=color565(52, 51, 50))
                 elif i == 4:
-                    main_os.secondary_display.display.draw_text8x8(15, 265, f"{date} - {time}", color565(194, 194, 194), background=color565(52, 51, 50))
+                    main_os.secondary_display.display.draw_text8x8(15, 265, f"{date[1]}/{date[2]}/{date[0]} - {date[3] + 2}:{date[4]:02d}", color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 275, f"{home_team} - {home_score}", color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 285, 'vs', color565(194, 194, 194), background=color565(52, 51, 50))
                     main_os.secondary_display.display.draw_text8x8(15, 295, f"{away_team} - {away_score}", color565(194, 194, 194), background=color565(52, 51, 50))
         elif self.latest_resp_code == 404:
                 main_os.secondary_display.display.draw_text8x8(65, 155, 'No Games Found', color565(194, 194, 194), background=color565( 52, 51, 50 ))
     
+    def write_cache(self):
+        if self.resp != None:
+            cached_sched = open(self.file_name, 'w')
+            cached_sched.write(str("test"))
+            cached_sched.close()
+        
     
 class wifi_app():
     def __init__(self, app_name, icon, wifi):
@@ -731,15 +761,17 @@ clock.init_clock()
 
 wifi = WiFi()
 
-packers_app = schedule_app('Packers Schedule', 'packers_app_icon.raw', 'https://rrrrlgrot7knkm7twzqzfi6cda0mepib.lambda-url.us-east-2.on.aws/')
-brewers_app = schedule_app('Brewers Schedule', 'brewers_app_icon.raw', 'https://qgk63yzapnm7q7i7jefehuopkm0xnwro.lambda-url.us-east-2.on.aws/')
-bucks_app = schedule_app('Bucks Schedule',  'bucks_app_icon.raw', 'https://6puu43kgcctatxxjax6dew5p7u0tjpaf.lambda-url.us-east-2.on.aws/')
-badgers_app = schedule_app('Badgers Schedule', 'badgers_app_icon.raw', 'https://rrrrlgrot7knkm7twzqzfi6cda0mepib.lambda-url.us-east-2.on.aws/')
+packers_app = schedule_app('Packers Schedule', 'packers_app_icon.raw', 'packers_sched_cache.csv', 'https://rrrrlgrot7knkm7twzqzfi6cda0mepib.lambda-url.us-east-2.on.aws/')
+brewers_app = schedule_app('Brewers Schedule', 'brewers_app_icon.raw', 'brewers_sched_cache.csv', 'http://192.168.1.3:8000/brewers/')
+bucks_app = schedule_app('Bucks Schedule',  'bucks_app_icon.raw', 'bucks_sched_cache.csv', 'https://6puu43kgcctatxxjax6dew5p7u0tjpaf.lambda-url.us-east-2.on.aws/')
+badgers_app = schedule_app('Badgers Schedule', 'badgers_app_icon.raw', 'badgers_sched_cache.csv', 'https://rrrrlgrot7knkm7twzqzfi6cda0mepib.lambda-url.us-east-2.on.aws/')
+f1_app = schedule_app('Formula 1 Schedule', 'f1_app_icon.raw', 'f1_sched_cache.csv', 'https://rrrrlgrot7knkm7twzqzfi6cda0mepib.lambda-url.us-east-2.on.aws/')
+
 settings_app = wifi_app('WiFi', 'settings_app_icon.raw', wifi)
 clear_sec_screen_app = clear_sec_screen_app('Clear Screen', 'clear_app_icon.raw', secondary_display)
 
 global main_os
-main_os = monk_os(main_display, secondary_display, wifi, clock, [packers_app, brewers_app, bucks_app, badgers_app, settings_app, clear_sec_screen_app])
+main_os = monk_os(main_display, secondary_display, wifi, clock, [packers_app, brewers_app, bucks_app, badgers_app, f1_app, settings_app, clear_sec_screen_app])
 
 async def task_update_screen():
     while True:
